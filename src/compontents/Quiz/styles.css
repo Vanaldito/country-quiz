@@ -1,5 +1,11 @@
 .quiz {
-  position: relative;
+  position: absolute;
+  width: 400px;
+  max-width: calc(100% - 60px);
+  left: 0;
+  right: 0;
+  top: max(calc(50% - 250px), 100px);
+  margin: auto;
 }
 
 .quiz__header {

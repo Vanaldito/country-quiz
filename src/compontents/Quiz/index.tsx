@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCountriesData } from "../../services/get-countries-data";
 import { CountryData } from "../../types";
+import Loader from "../Loader";
 
 import "./styles.css";
 
@@ -13,6 +14,8 @@ export default function Quiz() {
     getCountriesData().then(data => setCountriesData(data));
   }, []);
 
+  const loading = countriesData === null;
+
   return (
     <div className="quiz">
       <header className="quiz__header">
@@ -20,21 +23,27 @@ export default function Quiz() {
         <img className="quiz__img" src="/undraw_adventure_4hum 1.svg" />
       </header>
       <div className="quiz__content">
-        <h2 className="quiz__question">Kuala Lumpur is the capital of</h2>
-        <ol className="quiz__options">
-          <li className="quiz__option">
-            <span className="quiz__option__text">Vietnam</span>
-          </li>
-          <li className="quiz__option">
-            <span className="quiz__option__text">Malaysia</span>
-          </li>
-          <li className="quiz__option">
-            <span className="quiz__option__text">Sweden</span>
-          </li>
-          <li className="quiz__option">
-            <span className="quiz__option__text">Austria</span>
-          </li>
-        </ol>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <h2 className="quiz__question">Kuala Lumpur is the capital of</h2>
+            <ol className="quiz__options">
+              <li className="quiz__option">
+                <span className="quiz__option__text">Vietnam</span>
+              </li>
+              <li className="quiz__option">
+                <span className="quiz__option__text">Malaysia</span>
+              </li>
+              <li className="quiz__option">
+                <span className="quiz__option__text">Sweden</span>
+              </li>
+              <li className="quiz__option">
+                <span className="quiz__option__text">Austria</span>
+              </li>
+            </ol>
+          </>
+        )}
       </div>
     </div>
   );

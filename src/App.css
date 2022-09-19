@@ -20,9 +20,7 @@ html {
 .app {
   background: url("/background.png") center no-repeat;
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 30px;
   box-sizing: border-box;
+  position: relative;
 }
