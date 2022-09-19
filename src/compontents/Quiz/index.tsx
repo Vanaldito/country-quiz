@@ -1,6 +1,18 @@
+import { useEffect, useState } from "react";
+import { getCountriesData } from "../../services/get-countries-data";
+import { CountryData } from "../../types";
+
 import "./styles.css";
 
 export default function Quiz() {
+  const [countriesData, setCountriesData] = useState<Array<CountryData> | null>(
+    null
+  );
+
+  useEffect(() => {
+    getCountriesData().then(data => setCountriesData(data));
+  }, []);
+
   return (
     <div className="quiz">
       <header className="quiz__header">
