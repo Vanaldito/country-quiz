@@ -3,3 +3,11 @@ export interface CountryData {
   capital: string;
   flagUrl: string;
 }
+
+export interface QuestionInfo {
+  type: "capital" | "flag";
+  statement: string;
+  options: Array<string>;
+  correctOption: string;
+  flagUrl?: string;
+}

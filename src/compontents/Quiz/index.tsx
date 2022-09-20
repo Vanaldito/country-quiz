@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
-import { getCountriesData } from "../../services/get-countries-data";
-import { CountryData } from "../../types";
+import { useQuestion } from "../../hooks/use-question";
 import Loader from "../Loader";
 import Question from "../Question";
 
 import "./styles.css";
 
 export default function Quiz() {
-  const [countriesData, setCountriesData] = useState<Array<CountryData> | null>(
-    null
-  );
+  const [questionInfo, updateQuestion] = useQuestion();
 
-  useEffect(() => {
-    getCountriesData().then(data => setCountriesData(data));
-  }, []);
-
-  const loading = countriesData === null;
+  const loading = questionInfo === null;
 
   return (
     <div className="quiz">
@@ -28,8 +20,9 @@ export default function Quiz() {
           <Loader />
         ) : (
           <Question
-            statement="Kuala Lumpur is the capital of"
-            options={["Vietnam", "Malaysia", "Sweden", "Austria"]}
+            statement={questionInfo.statement}
+            options={questionInfo.options}
+            flagUrl={questionInfo.flagUrl}
           />
         )}
       </div>
