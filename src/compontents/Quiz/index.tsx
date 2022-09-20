@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCountriesData } from "../../services/get-countries-data";
 import { CountryData } from "../../types";
 import Loader from "../Loader";
+import Question from "../Question";
 
 import "./styles.css";
 
@@ -26,23 +27,10 @@ export default function Quiz() {
         {loading ? (
           <Loader />
         ) : (
-          <>
-            <h2 className="quiz__question">Kuala Lumpur is the capital of</h2>
-            <ol className="quiz__options">
-              <li className="quiz__option">
-                <span className="quiz__option__text">Vietnam</span>
-              </li>
-              <li className="quiz__option">
-                <span className="quiz__option__text">Malaysia</span>
-              </li>
-              <li className="quiz__option">
-                <span className="quiz__option__text">Sweden</span>
-              </li>
-              <li className="quiz__option">
-                <span className="quiz__option__text">Austria</span>
-              </li>
-            </ol>
-          </>
+          <Question
+            statement="Kuala Lumpur is the capital of"
+            options={["Vietnam", "Malaysia", "Sweden", "Austria"]}
+          />
         )}
       </div>
     </div>
