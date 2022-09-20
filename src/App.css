@@ -18,9 +18,10 @@ html {
 }
 
 .app {
+  overflow: auto;
   background: url("/background.png") center no-repeat;
   background-size: cover;
-  padding: 30px;
+  padding: 130px 30px 85px;
   box-sizing: border-box;
   position: relative;
 }
