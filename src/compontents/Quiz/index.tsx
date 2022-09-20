@@ -21,6 +21,7 @@ export default function Quiz() {
         ) : (
           <Question
             statement={questionInfo.statement}
+            correctOption={questionInfo.correctOption}
             options={questionInfo.options}
             flagUrl={questionInfo.flagUrl}
           />

@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.question__option:hover {
+.question__option:not(.question__option--blocked):hover {
   background-color: #f9a826;
   border-color: #f9a826;
   color: #ffffff;
@@ -39,6 +39,18 @@
 
 .question__option::marker {
   content: counter(count, upper-alpha);
+}
+
+.question__option--correct {
+  color: #ffffff;
+  background-color: #60bf88;
+  border-color: #60bf88;
+}
+
+.question__option--incorrect {
+  color: #ffffff;
+  background-color: #ea8282;
+  border-color: #ea8282;
 }
 
 .question__option__text {

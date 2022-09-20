@@ -1,16 +1,29 @@
+import { useState } from "react";
 import "./styles.css";
 
 interface QuestionProps {
   flagUrl?: string;
   statement: string;
+  correctOption: string;
   options: string[];
 }
 
 export default function Question({
   statement,
   options,
+  correctOption,
   flagUrl,
 }: QuestionProps) {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  function selectOption(option: string) {
+    return () => {
+      if (!selectedOption) {
+        setSelectedOption(option);
+      }
+    };
+  }
+
   return (
     <>
       <h2 className="question__statement">
@@ -18,11 +31,33 @@ export default function Question({
         {statement}
       </h2>
       <ol className="question__options">
-        {options.map(option => (
-          <li className="question__option" key={option}>
-            <span className="question__option__text">{option}</span>
-          </li>
-        ))}
+        {options.map(option => {
+          const thereIsASelection = !!selectedOption;
+          const isCorrectOption = option === correctOption;
+          const isIncorrectOption = option !== correctOption;
+          const isSelectedOption = option === selectedOption;
+
+          let className = "question__option";
+          className += thereIsASelection ? " question__option--blocked" : "";
+          className +=
+            thereIsASelection && isCorrectOption
+              ? " question__option--correct"
+              : "";
+          className +=
+            isSelectedOption && isIncorrectOption
+              ? " question__option--incorrect"
+              : "";
+
+          return (
+            <li
+              className={className}
+              onClick={selectOption(option)}
+              key={option}
+            >
+              <span className="question__option__text">{option}</span>
+            </li>
+          );
+        })}
       </ol>
     </>
   );
