@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useCorrectAnswers } from "../../hooks/use-correct-answers";
+import { useGame } from "../../hooks/use-game";
 import { useQuestion } from "../../hooks/use-question";
+import { useSelectedOption } from "../../hooks/use-selected-option";
 import Loader from "../Loader";
 import Question from "../Question";
 import Results from "../Results";
@@ -8,41 +10,27 @@ import "./styles.css";
 
 export default function Quiz() {
   const [questionInfo, updateQuestion] = useQuestion();
-  const [correctIsSelected, setCorrectIsSelected] = useState(false);
-  const [incorrectIsSelected, setIncorrectIsSelected] = useState(false);
-  const [correctAnwers, setCorrectAnswers] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const loading = questionInfo === null;
-
-  function selectOption(option: string, correctOption: string) {
-    return () => {
-      if (selectedOption) return;
-
-      setSelectedOption(option);
-
-      if (option === correctOption) {
-        setCorrectIsSelected(true);
-        setCorrectAnswers(correctAnwers => correctAnwers + 1);
-      } else {
-        setIncorrectIsSelected(true);
-      }
-    };
-  }
+  const { correctAnswers, increaseCorrectAnswers } = useCorrectAnswers();
+  const { gameIsRunning, stopGame } = useGame();
+  const {
+    selectedOption,
+    correctIsSelected,
+    incorrectIsSelected,
+    getSelectOptionFunction,
+    clearSelectedOption,
+  } = useSelectedOption();
 
   function getNextQuestion() {
     updateQuestion();
-    setCorrectIsSelected(false);
-    setSelectedOption("");
+    clearSelectedOption();
   }
 
   function endGame() {
-    setGameOver(true);
-    setCorrectIsSelected(false);
-    setIncorrectIsSelected(false);
-    setSelectedOption("");
+    stopGame();
+    clearSelectedOption();
   }
+
+  const loading = questionInfo === null;
 
   return (
     <div className="quiz">
@@ -55,17 +43,17 @@ export default function Quiz() {
           <Loader />
         ) : (
           <>
-            {gameOver ? (
-              <Results correctAnswers={correctAnwers} />
-            ) : (
+            {gameIsRunning ? (
               <Question
                 statement={questionInfo.statement}
                 correctOption={questionInfo.correctOption}
                 options={questionInfo.options}
                 flagUrl={questionInfo.flagUrl}
                 selectedOption={selectedOption}
-                selectOption={selectOption}
+                selectOption={getSelectOptionFunction(increaseCorrectAnswers)}
               />
+            ) : (
+              <Results correctAnswers={correctAnswers} />
             )}
             {correctIsSelected && (
               <button
