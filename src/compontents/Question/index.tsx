@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./styles.css";
 
 interface QuestionProps {
@@ -6,6 +5,8 @@ interface QuestionProps {
   statement: string;
   correctOption: string;
   options: string[];
+  selectedOption: string;
+  selectOption: (option: string, correctOption: string) => () => void;
 }
 
 export default function Question({
@@ -13,17 +14,9 @@ export default function Question({
   options,
   correctOption,
   flagUrl,
+  selectedOption,
+  selectOption,
 }: QuestionProps) {
-  const [selectedOption, setSelectedOption] = useState("");
-
-  function selectOption(option: string) {
-    return () => {
-      if (!selectedOption) {
-        setSelectedOption(option);
-      }
-    };
-  }
-
   return (
     <>
       <h2 className="question__statement">
@@ -51,7 +44,7 @@ export default function Question({
           return (
             <li
               className={className}
-              onClick={selectOption(option)}
+              onClick={selectOption(option, correctOption)}
               key={option}
             >
               <span className="question__option__text">{option}</span>
