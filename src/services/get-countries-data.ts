@@ -9,10 +9,11 @@ export async function getCountriesData(): Promise<Array<CountryData>> {
     flags: { png: string };
   }> = await res.json();
 
-  return data.map(info => ({
-    name: info.name.common,
-    /* Antarctica, Bouvet Island, Heard Island and McDonald Islands, and Macau don't have capital */
-    capital: (info.capital && info.capital[0]) ?? "Does not have",
-    flagUrl: info.flags.png,
-  }));
+  return data
+    .filter(info => "capital" in info) // Antarctica, Bouvet Island, Heard Island and McDonald Islands, and Macau don't have capital
+    .map(info => ({
+      name: info.name.common,
+      capital: (info.capital as Array<string>)[0],
+      flagUrl: info.flags.png,
+    }));
 }
