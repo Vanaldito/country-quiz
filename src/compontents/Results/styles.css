@@ -1,0 +1,26 @@
+.results {
+  text-align: center;
+}
+
+.results__img {
+  max-width: 100%;
+}
+
+.results__title {
+  font-size: 3.8rem;
+  margin-top: 30px;
+  font-weight: bold;
+  color: #1d355d;
+}
+
+.results__info {
+  font-size: 2rem;
+  margin-top: 10px;
+  color: #1d355d;
+}
+
+.results__correct-answers {
+  font-size: 3.6rem;
+  font-weight: bold;
+  color: #6fcf97;
+}

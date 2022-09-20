@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useQuestion } from "../../hooks/use-question";
 import Loader from "../Loader";
 import Question from "../Question";
+import Results from "../Results";
 
 import "./styles.css";
 
 export default function Quiz() {
   const [questionInfo, updateQuestion] = useQuestion();
   const [correctIsSelected, setCorrectIsSelected] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
   const loading = questionInfo === null;
@@ -20,6 +22,8 @@ export default function Quiz() {
 
       if (option === correctOption) {
         setCorrectIsSelected(true);
+      } else {
+        setGameOver(true);
       }
     };
   }
@@ -41,14 +45,18 @@ export default function Quiz() {
           <Loader />
         ) : (
           <>
-            <Question
-              statement={questionInfo.statement}
-              correctOption={questionInfo.correctOption}
-              options={questionInfo.options}
-              flagUrl={questionInfo.flagUrl}
-              selectedOption={selectedOption}
-              selectOption={selectOption}
-            />
+            {gameOver ? (
+              <Results correctAnswers={4} />
+            ) : (
+              <Question
+                statement={questionInfo.statement}
+                correctOption={questionInfo.correctOption}
+                options={questionInfo.options}
+                flagUrl={questionInfo.flagUrl}
+                selectedOption={selectedOption}
+                selectOption={selectOption}
+              />
+            )}
             {correctIsSelected && (
               <button
                 className="quiz__next-question-button"
