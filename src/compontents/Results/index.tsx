@@ -2,9 +2,10 @@ import "./styles.css";
 
 interface ResultsProps {
   correctAnswers: number;
+  tryAgain: () => void;
 }
 
-export default function Results({ correctAnswers }: ResultsProps) {
+export default function Results({ correctAnswers, tryAgain }: ResultsProps) {
   return (
     <div className="results">
       <img className="results__img" src="/undraw_winners_ao2o.svg" />
@@ -15,6 +16,13 @@ export default function Results({ correctAnswers }: ResultsProps) {
         correct answer
         {correctAnswers !== 1 && "s"}{" "}
       </div>
+      <button
+        className="results__try-again-button"
+        type="button"
+        onClick={tryAgain}
+      >
+        Try Again
+      </button>
     </div>
   );
 }

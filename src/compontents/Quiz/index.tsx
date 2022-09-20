@@ -9,9 +9,6 @@ import Results from "../Results";
 import "./styles.css";
 
 export default function Quiz() {
-  const [questionInfo, updateQuestion] = useQuestion();
-  const { correctAnswers, increaseCorrectAnswers } = useCorrectAnswers();
-  const { gameIsRunning, stopGame } = useGame();
   const {
     selectedOption,
     correctIsSelected,
@@ -19,6 +16,10 @@ export default function Quiz() {
     getSelectOptionFunction,
     clearSelectedOption,
   } = useSelectedOption();
+  const { correctAnswers, increaseCorrectAnswers, clearCorrectAnswers } =
+    useCorrectAnswers();
+  const { gameIsRunning, stopGame, startGame } = useGame();
+  const [questionInfo, updateQuestion] = useQuestion();
 
   function getNextQuestion() {
     updateQuestion();
@@ -28,6 +29,13 @@ export default function Quiz() {
   function endGame() {
     stopGame();
     clearSelectedOption();
+  }
+
+  function tryAgain() {
+    clearCorrectAnswers();
+    clearSelectedOption();
+    updateQuestion();
+    startGame();
   }
 
   const loading = questionInfo === null;
@@ -53,7 +61,7 @@ export default function Quiz() {
                 selectOption={getSelectOptionFunction(increaseCorrectAnswers)}
               />
             ) : (
-              <Results correctAnswers={correctAnswers} />
+              <Results correctAnswers={correctAnswers} tryAgain={tryAgain} />
             )}
             {correctIsSelected && (
               <button

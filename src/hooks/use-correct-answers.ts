@@ -7,8 +7,13 @@ export function useCorrectAnswers() {
     setCorrectAnswers(correctAnswers => correctAnswers + 1);
   }
 
+  function clearCorrectAnswers() {
+    setCorrectAnswers(0);
+  }
+
   return {
     correctAnswers,
     increaseCorrectAnswers,
+    clearCorrectAnswers,
   };
 }

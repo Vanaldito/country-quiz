@@ -24,3 +24,19 @@
   font-weight: bold;
   color: #6fcf97;
 }
+
+.results__try-again-button {
+  font-size: 1.8rem;
+  color: #1d355d;
+  border: 2px solid #1d355d;
+  background-color: inherit;
+  padding: 15px 40px;
+  border-radius: 12px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.results__try-again-button:hover {
+  background-color: #1d355d;
+  color: white;
+}

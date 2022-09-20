@@ -7,5 +7,9 @@ export function useGame() {
     setGameIsRunning(false);
   }
 
-  return { gameIsRunning, stopGame };
+  function startGame() {
+    setGameIsRunning(true);
+  }
+
+  return { gameIsRunning, stopGame, startGame };
 }
