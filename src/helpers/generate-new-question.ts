@@ -14,7 +14,9 @@ export function generateNewQuestion(countriesData: Array<CountryData>) {
   const randomizedData = [...countriesData].sort(() => Math.random() - 0.5);
 
   questionInfo.correctOption = randomizedData[0].name;
-  questionInfo.options = [0, 1, 2, 3].map(index => randomizedData[index].name);
+  questionInfo.options = [0, 1, 2, 3]
+    .map(index => randomizedData[index].name)
+    .sort(() => Math.random() - 0.5);
 
   switch (questionType) {
     case "capital":
