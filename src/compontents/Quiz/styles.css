@@ -34,7 +34,8 @@
   border-radius: 24px;
 }
 
-.quiz__next-question-button {
+.quiz__next-question-button,
+.quiz__end-game-button {
   display: block;
   font-size: 1.8rem;
   font-weight: bold;
@@ -48,6 +49,7 @@
   box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
 }
 
-.quiz__next-question-button:hover {
+.quiz__next-question-button:hover,
+.quiz__end-game-button:hover {
   background-color: #ef9f21;
 }

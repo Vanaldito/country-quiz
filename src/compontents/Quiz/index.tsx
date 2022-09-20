@@ -9,6 +9,8 @@ import "./styles.css";
 export default function Quiz() {
   const [questionInfo, updateQuestion] = useQuestion();
   const [correctIsSelected, setCorrectIsSelected] = useState(false);
+  const [incorrectIsSelected, setIncorrectIsSelected] = useState(false);
+  const [correctAnwers, setCorrectAnswers] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -22,8 +24,9 @@ export default function Quiz() {
 
       if (option === correctOption) {
         setCorrectIsSelected(true);
+        setCorrectAnswers(correctAnwers => correctAnwers + 1);
       } else {
-        setGameOver(true);
+        setIncorrectIsSelected(true);
       }
     };
   }
@@ -31,6 +34,13 @@ export default function Quiz() {
   function getNextQuestion() {
     updateQuestion();
     setCorrectIsSelected(false);
+    setSelectedOption("");
+  }
+
+  function endGame() {
+    setGameOver(true);
+    setCorrectIsSelected(false);
+    setIncorrectIsSelected(false);
     setSelectedOption("");
   }
 
@@ -46,7 +56,7 @@ export default function Quiz() {
         ) : (
           <>
             {gameOver ? (
-              <Results correctAnswers={4} />
+              <Results correctAnswers={correctAnwers} />
             ) : (
               <Question
                 statement={questionInfo.statement}
@@ -62,6 +72,11 @@ export default function Quiz() {
                 className="quiz__next-question-button"
                 onClick={getNextQuestion}
               >
+                Next
+              </button>
+            )}
+            {incorrectIsSelected && (
+              <button className="quiz__end-game-button" onClick={endGame}>
                 Next
               </button>
             )}
